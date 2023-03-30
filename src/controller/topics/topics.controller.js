@@ -38,12 +38,12 @@ const consultarPorCodigo = async function(req, res) {
         if(topicModelResult){
             res.json({
                 success: true,
-                usuarios:topicModelResult
+                topics:topicModelResult
         })
         }else{
             res.json({
                 success: true,
-                usuarios:null
+                topics:null
             })
             
         }
