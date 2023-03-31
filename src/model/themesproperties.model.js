@@ -24,6 +24,7 @@ const ThemesPropertiesModel = sequelize.define('ThemesProperties', {
   timestamps: false
 });
 
+
 module.exports = {
   ThemesPropertiesModel
 };

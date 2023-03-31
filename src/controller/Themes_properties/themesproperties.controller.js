@@ -26,6 +26,7 @@ const listar = async function(req, res) {
   }
 };
 
+
 const consultarPorCodigo = async function(req, res) {
   console.log("consultar tema y propiedades");
   const id = req.params.id;
@@ -54,9 +55,9 @@ const consultarPorCodigo = async function(req, res) {
 
 const actualizar = async function(req, res) {
   console.log("actualizar tema y propiedades");
-  let temaPropertiesRetorno = null; //GUARDARA EL TEMA Y PROPIEDADES QUE SE VAN A INCLUIR O EDITAR
-  const data = req.body; // SE OBTIENEN LOS DATOS DEL CUERPO DE LA PETICIÓN
-  const id = req.body.id; // ID PASADO
+  let temaPropertiesRetorno = null; 
+  const data = req.body; 
+  const id = req.body.id;
   try {
     temaPropertiesRetorno = await ThemesPropertiesService.actualizar(
       req.body.id,

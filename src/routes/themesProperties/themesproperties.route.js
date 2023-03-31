@@ -6,5 +6,4 @@ module.exports = function(app){
     app.get("/themesproperties", themesPropertiescontroller.consultarPorCodigo);
     app.post("/themesproperties/update", themesPropertiescontroller.actualizar); 
     app.delete("/themesproperties/delete", themesPropertiescontroller.eliminar);
-
 }
