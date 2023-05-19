@@ -6,5 +6,6 @@ module.exports = function(app){
     app.get("/user", usercontroller.consultarPorCodigo);
     app.post("/users/update", usercontroller.actualizar);
     app.delete("/users/delete", usercontroller.eliminar);
+    app.post("/user/login", usercontroller.login);
 
 }

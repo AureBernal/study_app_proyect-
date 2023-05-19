@@ -1,6 +1,7 @@
 const {sequelize} = require ("../../connection");
 const {UserModel} = require ("../../model/user.model");
-const Userservice = require ("../../service/users.service")
+const Userservice = require ("../../service/users.service");
+const jwt= require("jsonwebtoken");
 
 const listar = async function(req, res) {
     console.log("listar usuarios");
@@ -85,6 +86,53 @@ const actualizar = async function(req, res) {
     }    
 };
 
+const login = async function (req, res){
+    console.log("Login usuario")
+    try {
+        //busca en la base de datos el usuario con el correo electronico y contraseña propporcionados
+        const usersDB = await sequelize.query
+        ("SELECT * FROM users WHERE email = '"+req.body.email + "'AND password= '" + req.body.password+ "'" );
+        console.log("users",usersDB);
+        let user= null;
+        //verifica si se encontraron resultados en la consulta a la base de datos y asignar el primer resultado a la variable "users"
+        if (usersDB.length > 0 && usersDB[0].length > 0){
+            user=usersDB[0][0]; 
+            if (user.token){
+                res.json({
+                    success: false,
+                    error: "Usuario ya esta autenticado"
+                })
+                return;
+            }
+            let token = jwt.sign({
+                codigo: user.codigo,
+                name: user.name,
+                last_name: user.last_name,
+                avatar: user.avatar,
+                email: user.email,
+            },'passwd'); // actualiza el registro del ususario en la base de datos con el token generado
+            const userDBupdate = await sequelize.query("UPDATE users SET token= '"+ token + "' WHERE id= "+ user.id)
+            res.json({
+                success: true,
+                token
+            })
+
+        }else{
+            //si no se encuentra el usuario en la base de datos, devolver la respuesta con el mensaje de error correspondiente
+            res.json({
+                success:false,
+                error: "usuario no encontrado"
+            })
+        }
+    } catch (error) {
+        //si ocurre un error, devolver la respuesta con el mensaje de error
+        res.json({
+            success:false,
+            error: error.message
+        })
+    }
+}
+
 const eliminar = async function(req, res) {
     console.log("eliminar usuarios");
     try {
@@ -104,5 +152,6 @@ module.exports = {
     listar, 
     consultarPorCodigo,
     actualizar, 
-    eliminar
+    eliminar,
+    login
 };
