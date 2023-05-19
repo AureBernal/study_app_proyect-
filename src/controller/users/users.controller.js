@@ -133,6 +133,19 @@ const login = async function (req, res){
     }
 }
 
+const logout = async function (req, res){
+    try{
+        const usersDB = await sequelize.query("UPDATE user SET token = null WHERE id = "+ req.locals.userId+"");
+    }catch{
+
+        console.log(error);
+        req.json({
+            success: false,
+            error: error.message
+        });
+    }
+};
+
 const eliminar = async function(req, res) {
     console.log("eliminar usuarios");
     try {
@@ -153,5 +166,6 @@ module.exports = {
     consultarPorCodigo,
     actualizar, 
     eliminar,
-    login
+    login,
+    logout
 };
