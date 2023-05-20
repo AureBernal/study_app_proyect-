@@ -4,8 +4,10 @@ const {sequelize}= require('../connection');
 const UserModel = sequelize.define('User',{
     id:{
         type: DataTypes.INTEGER,
+        allowNull:false,
         primaryKey: true,
         autoIncrement: true,
+
     },
     name:{
         type: DataTypes.STRING,
@@ -30,8 +32,13 @@ const UserModel = sequelize.define('User',{
     deleted:{
         type: DataTypes.BOOLEAN,
         allowNull:false,
+    },
+    token:{
+        type: DataTypes.STRING,
+        allowNull:true,
     }
 
+    
 },{
     tableName:'users',
     timestamps:false

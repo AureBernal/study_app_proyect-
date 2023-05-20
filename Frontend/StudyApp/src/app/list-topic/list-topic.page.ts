@@ -7,39 +7,39 @@ import axios from 'axios';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-list-topic',
+  templateUrl: 'list-topic.page.html',
+  styleUrls: ['list-topic.page.scss'],
 })
-export class HomePage implements OnInit {
+export class ListTopicPage implements OnInit {
   private data = inject(DataService);
   constructor(private toastController: ToastController,private router: Router) {}
-  usuarios: any=[];
+  topics: any=[];
   refresh(ev: any) {
     setTimeout(() => {
       (ev as RefresherCustomEvent).detail.complete();
     }, 3000);
   }
   ionViewWillEnter(): void {
-    this.getUsers();
+    this.getTopics();
   }
   ngOnInit(): void {
-    //this.getUsers();
+    //this.getTopics();
    
   }
   getMessages(): Message[] {
     return this.data.getMessages();
   }
   eliminar(id: number){
-    axios.delete('http://localhost:3000/users/delete/'+ id, {
+    axios.delete('http://localhost:3000/topics/delete/'+ id, {
       headers: {
         'Authorization': localStorage.getItem("token")
       },
     }).then(async result=>{
       if(result.data.success){
-        this.usuarios=result.data.usuarios;
-        await this.presentToast('Usuario Eliminado');
-       
+  
+        await this.presentToast('Topico Eliminado');
+        this.getTopics();
       }else{
         await this.presentToast('Error '+ result.data.error);
         console.log( result.data.error);
@@ -59,36 +59,18 @@ export class HomePage implements OnInit {
     })
     await toast.present();
   }
-  Logout(){
+  Home(){
    
-    axios.post('http://localhost:3000/users/logout',{}, {
-      headers: {
-        'authorization': localStorage.getItem("token")
-      },
-
-    }).then(async result=>{
-      if(result.data.success){
-
-        await this.presentToast('Usuario Deslogueado');
-        this.router.navigate(["/login-user"]);
-      }else{
-        await this.presentToast('Error '+result.data.error);
-        
-      }
-    
-    }).catch(async error=>{
-      await this.presentToast('Error '+error.message);
-      console.log(error.message);
-    })
+    this.router.navigate(["/home"]);
   }
-  getUsers(){
-    axios.get('http://localhost:3000/users/list', {
+  getTopics(){
+    axios.get('http://localhost:3000/topics/list', {
       headers: {
         'Authorization': localStorage.getItem("token")
       },
     }).then(result=>{
       if(result.data.success){
-        this.usuarios=result.data.usuarios;
+        this.topics=result.data.topics;
       }else{
         console.log( result.data.error);
       }

@@ -1,29 +1,21 @@
+
 const express = require('express');
-const bodyparser = require('body-parser')
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
-app.use(bodyparser());
-const userRoute = require("./src/routes/users/users.route");
-const themesRoute = require("./src/routes/themes/themes.route");
-const topicsRoute = require("./src/routes/topics/topics.route");
+app.use(bodyParser());
+app.use(cors ({
+    origin: '*'
+}));
+const userRoute= require("./src/route/users/users.route");
 
-const themespropertiesRoute = require("./src/routes/themesProperties/themesproperties.route");
-//ruta raiz
-app.get('/', function (req, res) {
-    //logica 
-  res.send('Hello World')
-});
-
-app.get('/pagina2', function (req, res) {
-    //logica de negocios
-    //esta aqui -controller
-  res.json({application: 'study app', version:'1.0.0'});
-  
-});
-//llamadas a los routes de los casos de UCs
+const themesRoute= require("./src/route/themes/themes.route");
+const topicsRoute= require("./src/route/topics/topics.route");
+const themesPropertiesRoute= require("./src/route/themes_properties/themes_properties.route");
+//RUTA RAIZ ES ESE GET
+//LLAMADA A LA RUTA DE LOS CASOS DE USO, EN ESTE CASO DE USER AL INICIO DE LA APLICACION
 userRoute(app);
 themesRoute(app);
 topicsRoute(app);
-
-themespropertiesRoute(app);
-
+themesPropertiesRoute(app);
 app.listen(3000);

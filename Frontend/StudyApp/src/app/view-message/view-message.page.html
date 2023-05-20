@@ -6,21 +6,34 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" *ngIf="usuario">
+<ion-content [fullscreen]="true" *ngIf="usuarios">
   <ion-item>
     <ion-icon aria-hidden="true" name="person-circle" color="primary"></ion-icon>
-    <ion-label class="ion-text-wrap">
-      <h2>
-        <ion-list>
-          <ion-item> {{ usuario.name }} </ion-item>
-          <ion-item> {{ usuario.last_name }} </ion-item>
-          <ion-item> {{ usuario.email }} </ion-item>
-          <ion-item> {{ usuario.password }} </ion-item>
-
-        </ion-list>
+    <ion-label class="ion-text-wrap ">
+     
+     
+      <ion-list id="nombre">
+        <ion-label for="nombre">Nombre : {{ usuarios.name }}</ion-label>
+      </ion-list>
+      <ion-list id="apellido">
+        <ion-label for="apellido">Apellido : {{ usuarios.last_name }}</ion-label>
+      </ion-list>
+      <ion-list id="email">
+        <ion-label for="email">Email : {{ usuarios.email }}</ion-label>
+      </ion-list>
+      <ion-list id="contraseña"> 
+        <ion-label for="contraseña">Contraseña : {{ usuarios.password }}</ion-label>
         
-      </h2>
+      </ion-list>
+      
+     
+
     </ion-label>
   </ion-item>
   
+  <div class="ion-padding">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+  </div>
 </ion-content>
